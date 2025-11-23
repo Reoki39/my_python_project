@@ -1,217 +1,3529 @@
-<html class="root-main"><head><script src="https://ids.hit.edu.cn/authserver/cusHitnew/static/common/ua-parser.min.js"></script><script src="https://ids.hit.edu.cn/authserver/cusHitnew/static/common/md5.min.js"></script></head><body>﻿
-<!-- 移动端 --><!-- PC端 --><!--校外用户登录--><!-- 二维码扫码登录 --><!-- 兼容性登录 --><!--校外用户登录--><!-- 帐号登录或动态码登录 -->
-	<meta charset="utf-8"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>统一身份认证平台</title>
-	<script>
-		var inputUserNameTip = "\u8BF7\u8F93\u5165\u7528\u6237\u540D";
-		var inputPasswordTip = "\u8BF7\u8F93\u5165\u5BC6\u7801";
-		var inputCodeTip = "\u8BF7\u8F93\u5165\u9A8C\u8BC1\u7801";
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+	<title>哈尔滨工业大学本科教学管理与服务平台</title>
+	
+	<script src="/resources/js/common/task/jquery-4.2.1.min.js" type="text/javascript"></script>
+	<script src="/resources/js/common/task/index_01.js" type="text/javascript"></script>
+	<script src="/resources/js/common/task/jquery.plugins.js" type="text/javascript"></script>
+	<script type="text/javascript" src="/resources/js/common/modalpopup.js"></script>
+	<script src="/resources/js/common/menu/texthover.js" type="text/javascript"></script>
+	<script src="/resources/js/common/menu/jquery-4.4.1.min.js" type="text/javascript"></script>
 
-		var inputMobileTip = "\u8BF7\u8F93\u5165\u624B\u673A\u53F7\u6216\u5B66\u53F7";
-		var inputDynamicTip = "\u8BF7\u8F93\u5165\u9A8C\u8BC1\u7801";
-		var inputDynamicGetCode = "\u83B7\u53D6\u9A8C\u8BC1\u7801";
-		var excludeRegular = "\u7528\u6237\u540D\u5305\u542B\u7279\u6B8A\u5B57\u7B26";
-		//不转码，防止参数丢失
-		var service = ["http:\/\/jwts.hit.edu.cn\/loginCAS"];
-		var type = null;
-		var jsonObject = {"pcLogoPath":null,"pcThemeColor":null,"officialUrl":null,"defaultWxQrCode":0,"wxQrCode":null,"defaultImage":1,"imageType":0,"shufflingTime":5,"shufflingStyle":1,"imageNames":["PC_BG_0.jpg"],"mobileLogoPath":null,"mobileThemeColor":null,"mobileModel":0,"mobileImages":["default_mobile_login.png"],"otherModel":0,"otherImages":["default_auth_serv_bg.png"]};
-		var reg = "[$:{}]";
-	</script>
+	<script src="/resources/js/common/zt/changemenu.js"></script>
+	<script src="/resources/js/common/zt/jquery-4.5.1.min.js"></script>
+	<script src="/resources/js/common/zt/bootstrap.min.js"></script>
+	<script src="/resources/js/common/zt/changeColor.js"></script>
+
+
+	<style type="text/css">
+	.tbts_title{width:658px; height:60px;background:url("/resources/images/common/tbts_06.gif") no-repeat left top;}
+	.syxz{width:658px; border:1px solid #ffffff; background:url("/resources/images/common/syxz_03.gif") repeat-x top;}
+.syxz_title{width:658px; height:60px;background:url("/resources/images/common/syxz_06.gif") no-repeat left top;}
+.syxz_bottom{width:635px; height:50px;background:#fdeee5; line-height:50px; padding:0px 10px}
+    </style>
+	<link href="/resources/css/common/style.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="/resources/css/ztys/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/resources/css/ztys/font-awesome.min.css">
+	<link type="text/css" rel="stylesheet" href="/resources/css/ztys/blue.css">
+
 	<script type="text/javascript">
-		if (service == '' || !service) {
-			service = '';//saml后缀
+		
+		
+		
+
+		jQuery().ready(function(){
+
+			
+
+			
+			
+
+			
+
+			
+
+
+			
+			var src = "/pubtzgg/queryTzggByMxxs";
+			
+			jQuery("#iframename").attr("src",src);
+
+
+		});
+
+		//切换角色
+		function qhjsLogin(jsdm){
+			if($("#dljs").val() == jsdm){
+				return;
+			}else{
+				$("#jsdm").val(jsdm);
+				document.queryform.action = "/login";
+				document.queryform.submit();
+			}
 		}
-		var isQrLogin = "false";
-		var isQrLoginEnabled = "true"
-		var captchaSwitch = "2";
-		var needCaptcha = "true";
-		var _fidoEnabled = "false";
-		var is_dynamicLogin = "false";
-		var contextPath = "/authserver";
-		var cllt = "userNameLogin";
-		var _badCredentialsCount = "2";
-	</script>
-	<link rel="stylesheet" type="text/css" href="/authserver/cusHitnew/static/css/toastr.min.css?v=20251117.152500"><link rel="stylesheet" type="text/css" href="/authserver/cusHitnew/static/web/css/login.css?v=20251117.152500"><link rel="stylesheet" type="text/css" href="/authserver/cusHitnew/static/web/iconfont/iconfont.css?v=20251117.152500"><link rel="stylesheet" type="text/css" href="/authserver/cusHitnew/static/web/css/fido.css?v=20251117.152500"><link rel="stylesheet" type="text/css" href="/authserver/cusHitnew/static/common/css/swiper.min.css?v=20251117.152500"><link rel="stylesheet" type="text/css" href="/authserver/cusHitnew/customStatic/web/css/index.css?v=20251117.152500"><script type="text/javascript" src="/authserver/cusHitnew/static/common/swiper.min.js?v=20251117.152500"></script>
-	<script type="text/javascript" src="/authserver/cusHitnew/static/common/jquery-latest.min.js?v=20251117.152500"></script>
-	<script type="text/javascript" src="/authserver/cusHitnew/static/js/plugin/toastr.min.js?v=20251117.152500"></script>
-	<script type="text/javascript" src="/authserver/cusHitnew/static/common/utils.js?v=20251117.152500"></script>
-	<script type="text/javascript" src="/authserver/cusHitnew/static/common/common-header.js?v=20251117.152500"></script>
-	<script type="text/javascript" src="/authserver/cusHitnew/static/common/encrypt.js?v=20251117.152500"></script>
-	<script type="text/javascript" src="/authserver/cusHitnew/static/web/js/fido.js?v=20251117.152500"></script>
-	<script type="text/javascript" src="/authserver/cusHitnew/static/web/js/schoolCombinedLogin.js?v=20251117.152500"></script>
-	<script type="text/javascript" src="/authserver/cusHitnew/static/web/js/login.js?v=20251117.152500"></script>
+
+		//返回主页
+		function getReturn(){
+			location.href="/main";
+		}
 
 
 
-	<div class="container">
-		<div class="auth_page_wrappers">
-			<div class="auth_bg">
-				<img id="idsbg" src="/authserver/cusHitnew/customStatic/web/images/bg1.jpg"></div>
-			<div class="auth_login_content">
-				<div class="main-logo">
-					<img src="/authserver/cusHitnew/customStatic/web/images/pc_logo_new.png"><span class="auth-title">统一身份认证</span>
-				</div>
-				<div class="left-qrcode">
-					<div class="login-qrcode">
-						<div>
-    <script type="text/javascript" src="/authserver/cusHitnew/static/custom/js/qrcode.js?v=20251117.152500"></script>
-    <!--认证融合码--><div>
-        <div class="qr_scan_box">
-            <form method="post" id="qrLoginForm" action="/authserver/login?display=qrLogin&amp;service=http%3A%2F%2Fjwts.hit.edu.cn%2FloginCAS" role="form">
-                <div id="qr_code">
-                    <div class="qr_scan_code"><img id="qr_img" src="/authserver/qrCode/getCode?uuid=hgd:QR-iNBaS4zvfUzzgpF6Svl_hgd"></div>
-                    <span class="title lang_text_ellipsis" title="手机扫码  安全登录" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; overflow-wrap: break-word; display: none;">手机扫码  安全登录</span>
-                </div>
-                <div id="qr_success" class="qr_success" style="display: none">
-                    <div class="qr_scan_success">
-                        <img src="/authserver/cusHitnew/static/custom/images/success_qr.png"><div class="qr_success_tips_div">
-                            <span class="qr_success_tips">扫描成功</span>
-                            <span class="sub_title lang_text_ellipsis qr_success_sub_title" title="请在手机上「确认登录」" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; overflow-wrap: break-word; display: inline-block;">请在手机上「确认登录」</span>
-                        </div>
-                    </div>
-                    <div class="scan_footer lang_text_ellipsis qr_success_back" title="返回二维码" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; overflow-wrap: break-word; display: inline-block;"><a class="scan_a" href="javascript:refresh();">返回二维码</a></div>
-                </div>
-                <div id="qr_invalid" style="display: none">
-                    <div class="qr_scan_code">
-                        <img id="invalid_img" src="/authserver/qrCode/getCode?uuid=hgd:QR-iNBaS4zvfUzzgpF6Svl_hgd"><div class="qr_scan_Invalid">
-                            <img id="qr_refresh" src="/authserver/cusHitnew/static/custom/images/refresh.png" onclick="refresh()"></div>
-                    </div>
-                    <span class="title lang_text_ellipsis" title="手机扫码  安全登录" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; overflow-wrap: break-word; display: none;">手机扫码  安全登录</span>
-                </div>
-                <input type="hidden" name="lt" id="lt" value=""><input type="hidden" name="uuid" id="uuid" value="hgd:QR-iNBaS4zvfUzzgpF6Svl_hgd"><input type="hidden" name="cllt" value="qrLogin"><input type="hidden" id="dllt" name="dllt" value="generalLogin"><input type="hidden" name="execution" value="1857aa0a-f67d-4753-b724-20a83be2e58d_ZXlKaGJHY2lPaUpJVXpVeE1pSjkueUZLMHhaTVRuRTlzb2RVVGFPWHU3YVdtaEYwVVZXMmwrdjdtYStGRDNZaUNuRXBaa1Q0YWVOWTgvOUlYUlJJdU0rQzZCQWZWMHVBK3E2dHE2bTVZTE9rekdQVlBxNUIzN2N4N3RZa2RRSkx5ZnBnUnN1SXFpTk4rWWdhVVJjUEFGM2xZejFLOFdtT3J2RXU1SUVIZ1UyR3BBT3dsazR2MUhudVZxeDFmM1UvTEk1dHFHRDR0UHJINkJSWlJTWmxiU3NTRzdhZUNGaHZ0TTJmVk5ZKy9peDd1Smk4VGJDYjBjdjlIUXJrSXVPdVFRT0MvN1FabWl6aDV0VTFUNURXRmJPYzRVMmVORFFFdHA4QkdTd0J0UHNETE00S0s1bWIzMVNpU2ZKaS93azhtWjdiU2NhQmVVOHJyUFNsNzNQTGdIU01oR01QU0lyWnVIdXBLOVZwSkR3L0RyS2svZ0hiby9pd1o4a2QvSW9oWExXM1NYbVZxblY4dVFGS2s3UThsRHJPaE9pU1FUUjB3S0pWbHRnT1ZWVklSV3dOeG44bzNpT0wvSVV6Mk1FZXVIdXZ1UmVSZ3J3bitjcTlBNHdCaFdZVHhseFNndVdsQk8vUXdBUVVmKzlzV1NqYmlVS2NYbGdhT2FDQkFxWjdzOUpFczZ2bkZvdnpxOGlhRlh3SGNuNDlOaU1sOWJOdXZvS2JqK1dhZTF0emNCT05IYjZXTkJ3a2VNdmNlWERlYzZPenB3dldPRUNUSnNmdEd6bFR2U0hXQ05JY0IvR21jc3NWbnEySnRTOEVQelVGcVZmbDNZTHlHNGY2aEVnZFYwbFZreng2eW9aVUxFNUlwdUthcEhEQ1JUWVdnZGRtdUg0Q1h3bTN6TEh2SVNTM1AveUZYRDZsUVRXaUhPeXVVdG44UHFwTXJWV3FqMlY5SEFUcEJYODV0eDJZVEp5Q0xUcFMzWThlZEx0Wis4YTAzaFpQRzl0N0hmOVd3bmhLMXJLZnVXellOTjk3TTlMa201SzU4YjQrU1lGbnBOQlNrTmpiVzUzYWtIZ0RKemowNnNxdnY5dnB5cHl1eVNOVkNHc0dlcE9ha2JiT2s0bG9hbS9tWHU2V0NXYVFYYkRHV2pzZ2hHWXduTFZPS1JwSVNpU0N0S0FOdmVFRU9zYVJXWnU3SCs3eDZFdlZIYmdRL212UDc2ckpEcUx4UUtGNjBvTk8yOXRvNjVHdi83K0tlWG1ORGtRcE5LVXpQK1ErM1hab09hMHhHa3V3ZUNsaEZuQ2JCY2VRSHB6bElEdDFVUDlZNlMrODYveEoxSUVmaGVNUHIxYmNMaXRoRDNLdm5oME1QTjYzY08wZThhbUNKOEpIQzQ3UHQya1U1TXZMNkpLRUdNOFRKcVZScFNIcXYzcG9FVzh4RTJzZU1DY09ZQTVlTmNZYjgxa2ZZY3pzd2xMcHVlSEpVUWpZdktpc3FpVklmWXgxQVR4eDcxUTFHVSs5TytOUTdGSWZqMlBGMmlsN0V1VTlETU1Hc1RSQkVadndPRk9QWVUxRjd1UWIwbXpkRERaRHVBUWd4NWloclB2dlNaKzVnSElzWDZsWUtHM2xjbnVnTHk4TGFiV2JiN3JGa05EV2RpeE5YdDk3bGJIT1R1QnZzZ2w0a29KMmMwWmJ5My9WWHVaSHphakRJS2Z2eGplU3JSbjJYbHhYZ2dSMnJxOWJIZXNzSUxReS9mNnZQaGZ1TmUzcWJ5VnU3V1lyMU5SbnFEUk9xaWFMcW83TDQ4cmJoRW5rOHFEL2xHWTNNTk9COXEvWGs5UW9sRlBsOVA1NnBRM01jdm5zd2N0NW4rQ3p1ekFsNkE3cmJMTkIxWnVRTWIzNXJ4N1dGb1VwMVF6T2NoazBGRURLSS9tNmFwOE80YlI2YmxHaldvTjZGaWx3Zk9JM0cvS3NReWhuYW5aRVBlcE01aEVKMkxSeUZoZzZUajlxSldnQ29YMExGbmdqeXdCQlU3djVIVHdQQUNDTGl4ZGZicXhXWHVhOTUrSmJ1RG5pRjdRK0NXQm5qZmkveHc5ZlhHM1dDTU1jQmZxOWMramZSTGtqRGVkRElucWZ0cXExOGhqNmEwYlNVaHdLdHNDWmxQUGZmTFZzRWU0S2p1Szl6RHJKenQ3UmpkNUhIQ2VFT3pIaU5ORExyV2trSlZZa3EvTFhndlVZdjhPeXFUaFkxcllJUFdodFppLzBOZzNJUmV1clRNaExCZWQ1TWw3bW1lSVZ2U3BvMGZUV1JoRFRYT2FxbnlTUXBDK1lYelhNWW1pWC9ucmMyRjk0ek9kb0ZMai9IUHpDbHJtUHhZVTk2QmJkSzNucklUM00rUFZBY1pwS3B6bGtlNlhZeE15YnFrS2VuN3hZa0hLQXN1QW82RkV2Sm5WN05TRlB4ek1CQ3JZOXJjTzBMVmR6ZHpnUHVnMHQwSi8xOGY2SkpBeUVWQ2ZFVGd6NXIyaTV2R0JGQUpJMUpvMEFDWHZiT281V00yUVpiM2FOdHVESVI5SzVBUUpZR00yWE1GeEtOQXF3eDRyWE14ZFJRanM1aVBtNGlmTS9XUGt3QlNmNzVJaHBNdythVkUzbUNGZG45NEJ0QzZxYlBYdTJ1ZldGRUZwclYramltanU0SE54K05SdEd5MitGZUUwTGVzZS85T0c4WGFKdThWcHRsMkd5VXA5WGNYN2g0K1g0N2plZTlvMTE5Q1VWUGM0TTRJbkZtWi92MWtsUjU0WUZYZ1ZNS0xhN29PU1NqbmxkbDQ4ZUNQcUVxUG94aWFKb2ZHTkhiVTF2ZFVGNmlCZ2lzUnVOOFFScmtTUVFWaGJocGp1ZHRaVkd6SjZWa25BZFNqQ1VVTFkxVHFNOWpZcXNVVmQwQVp5VFJaY2JhY2Y5THM2T1BCZGtqRHdKZEpWUC9PTkF0TG1pWUdJVFJ5OWxlRzhsQXhyV2k5TlM0eEVWUjZnZk4velQ5MnZnVkNqNFdkZHVyelhYVlBrNFNJRUJiZkdqVFAydHk0WnBUMGJEMzZXcDE1Z1hkcEV1TktsamJ5K0hkckNFN01adHV1QlZaZkl6bmp6b2J6bXNsTWpMcHZxeW10Ym4wM3hMVGN1N1VCeHpQMGwvd0kwa1MyRzBVY2QrTVAvc2RqTnR4K2hDS3dIYXFzbkRRaFpyY2lDMzVFMVBpd2lWWmtDOGtsU09tVHBTMkZWUGlTeTF3K3pPWmx3QXFUNXU0MTJrTkwybVE4ZUQ4OVFBSzRHMlhBSXlvdDlYLzhPOVg0SDFTa3Rua2xRZ3hvaUdRZkkzMzBYYXhLeTFpSzNTUGE2eVhVWFFveTFSUkVVSW03TUNhc05vM05CalcxYTRTMXhpZGJLaFRNaFYyQUxBdlkzSlI5UEhPM1QwZjVOWmFXNXZWaHNXeXlZYW56RUU1Y2NOVVNiTHJIa1VJazdjNW9jb3hQbDhHTmUwWUZWVm5Yd3B1eWhTYThvWmhoTDJhZXJhc0FCRTdjaWgrcmNVM3Zmek1WUHY2MWd2WnJlUWJPMWJQYXpyQmdLNXl2aW5zSE5zU0xWUXY0c3B1c25Ca0tENDhKLzQ1RUE5QnYzL1pESkNXTzAxVTFlQlRadzFYeXFJZ2RxVmxEWHpNYTdnWmlDYzl0UU5VUVVNdjdiT3dibDA3bzlZRlZNVW5mMGZlSlc0dmlKWllGeXA4LzBpaExqc2M5SG5vekc3ek9wdzR3N2ZuRVpjWlRxaklUNzNnWnFZbkpFMGRwaUdYYktNMWRtNmlBWnBrTmpVSGhKRll0Sm5lbml5UWsxV3R5a3NGcTBpVWovZnlJL3cwYm1WT3dhSnFDaUhKbUFXVkE5QUVhdHpCK2p6NkxCZ1BOeUl3TzRYUmlBbTVCbG02SmlKZ1B5NW1VZGpkUW55cmNSQk1wSEVIekxKQ1J3T2lybEtIaGNXL0x4SVVOM2dxSjhPSjRVME1kdjRhRlpQdUFGdFAwTXlzcmluRDRSbU1IMDZMSDlkb0pMOEh1MTdIYjI3TnJ6MWNMaDFLYjFDMTBIL3BZNmhQMytSbHYyRmlObzVEMWdLNlVSL2wyMS9nQ3A3K09acEpaZ1Y0RmQrV0Z1M2FxTlpRaUl5NGJtT1FiRXJCZkJpbTcvSE1lQXo0ZCtrb3dVYXJ6SUczTnlycTM4NlFXN1RPSkl5OUJleUhPUzZLVWl2L1cwUGl0bzB2a21qYTI3NjQxSW02ZWtGUXVjSXgyOU9pMVZkU0JSWUljbnp0a2dNa3R6VmhjNEE0L0lpS1NqUm5DNmZpUnJyNjhDcHUyb2FhSnB5U1F5RzNmVm1zWElQRUY4RmMwS2tybVlFOFRtaEM4Ylo4VlVKY3hLRkkrY3YvbDBqU2o2VmJITEI3Y0NJV0pZSHorY0NBeXVLbVlDd29yK1oxbFpaZXNOWmNFMjY3YUNOSDE0ZDBrY2pidjR5RXBDV3NUZXZQVE1HQksrT1pyOXl4b21jY3ZqMlZydmtNVVZBbWwvemtrcS9LSUNlTU50aE05d3FEMXI1ckNSTysxYUNmMDZPNTNJRlNZdTYvZU1wOVBQVHJsbGZlTElYTXpvQmVpWE1YTlJJWDk3RC9ETTZEbEdjbEVlZlVsTVpKT3hDenlSeWE4RytSUVhyOXNhRm56VmVCV0FYRHZ3RTVpWmpTQUlHNnJPZ1JWczc4ZU9vaFQ4dnVYTjZMWXVEVWJsRTZyaGxZbDhScU9LeFR1RzZCZ25GZUNNbWZ2NUE4bkFneWx3a04xNkpTRng2bFJOK3pjUk5WOFN4MEZKeUhudThKN1NFWnQ1OG5CeExOMTZYb3BpaFpHV3d3K3ZBL0h0UGg2N3VaMGNycGNMOG1iUzdiWmsrcnh6NStiL3psUzdjSUwrSU9Obm9DTjRTNHh1S1VYcUF2YXI1T1R4ekpUMFRrc1JxRlE4a3NQbFBOYlFCSjFLV1V2Q1VDV09ERHdwUTdWL0xlWUZsaGJoU09IdTFHUC9BUXZVYi85TVU5bnNXQ20rSDVoSUx5eXpyK3R5S2lzb0FxSGZCUW9FemYxWTNJaUZiWTdOWWdYVThjOGxjeUxSeHVrRlNpU1NFQUJpeTYrMFVDMk8yaU1ERStyZUt1U3g0U0s2cER4ZnBYVUtXWDZET05hMlV5a3ExaHFWYjZ1eXg1QXBSVU5qVnR2ZG9CSTZXVG4raVV2Q3l4b2VQL2pyczlyNVF4eS9KMjdBcHkvMVNFWVBSQmVVZVNkZWltRGd2Sk5NWXhLbDNwSVIvWTFEN0ZOenJxRXdheW1hZVpUdHhWL3pCV3hLbi8wUjZYZDdlTjRjR3pkYlpIRS9HME5CaHFMZnJkK3RIRFNTQzVWaXdmc2ZqZjg5T2JxZk1qWWU4M2MwSGgwYWdoNHlUSGNLd1NjcS9uS1Q1UkpkdTJvUU5RRlczcXMxYTBsM1VTNEdMdkJ6ak1RMk1LSDVMQkZNNFY1MlhQSVBMdC9CRjk3eUoxeWhwQ0JCMG9qTTJSNmNoY3QyN1NsaVhtVVNRako0RzhIL2NKTlFXMEMxdVkxQTdtakg3ckZlQVhlVWNBbURCMW5vVXNCbGVZNElwejErR3NFVUpLd3BiNG5yK0ZRU2ZBbnZLa09yV2ZzVHdyQTlITWRXbnRKVEVwTkl0MHNaMitIUHFvR2pORVh0UVNiamZLRGs0STdIcG1UWEc4Z0NrZjh0N1E1bytJR0I2UjVtd01TSDc3SUJQSXY5TGVEUG9GblpEMUxVdGd4YnJCREc1V0FnMXJsdWc9LkpyNmdudHpzUGQ3cUtBVzVfQzBtVVNyNDl3MjhSckVLVTJIN1daZVRlczVTalFMbWp5cUZXbFJvZ2xWWmdPbzdBQXdRc2NrWXBmclU2NXZIOGJwOV93"><input type="hidden" name="_eventId" value="submit"><input type="hidden" name="rmShown" value="1"></form>
-        </div>
-    </div>
-    <!--企业微信码--></div>
-					</div>
-					<!-- <div class="weixin-saoma">
-						<p class="hgdapp" th:text="#{ids.pc.login.dz.hgdapp}"></p>
-						<p class="appsm" th:text="#{ids.pc.login.dz.smdl}"></p>
-					</div> --><div class="weixin-saoma">
-						<p><a href="https://app.hit.edu.cn/" target="_blank">哈工大APP</a><span>扫码登录</span> </p>
-					</div>
-
-
-					<div class="all_ways">
-						<!--跨校认证start--><!-- <div th:if="${not #lists.isEmpty(idsUnionInfoProviderSize)}"
-						style="width: 100%;"
-						>
-							<div th:if="${idsUnionInfoProviderSize} gt '1'" style="display: flex;align-items: center;flex-wrap: wrap;justify-content: space-between;width: 100%;">
-								<div th:each="idsUnion:${idsUnionInfoProviderTypes}" class="ids_union_info_item">
-									<a class="loginFont_a idsUnion_loginFont_a"
-										th:href="@{'/combinedLogin.do?type='+${idsUnion.combinedType}+'&appId='+${idsUnion.id}}"
-										th:text="${#strings.abbreviate(idsUnion.combinedName,9)}"
-										th:title="${idsUnion.combinedName}"></a>
-								</div>
-							</div>
-							<div th:if="${idsUnionInfoProviderSize} eq '1'" style="display: flex;align-items: center;flex-wrap: wrap;justify-content: space-between;width: 100%;">
-								<div th:each="idsUnion:${idsUnionInfoProviderTypes}"  class="ids_union_info_item">
-									<a class="idsUnion_loginFont_a"
-										th:href="@{'/combinedLogin.do?type='+${idsUnion.combinedType}+'&appId='+${idsUnion.id}}"
-										th:text="${#strings.abbreviate(idsUnion.combinedName,9)}"
-										th:title="${idsUnion.combinedName}"></a>
-								</div>
-							</div>
-						</div> --><!--跨校认证end--><div class="hide">
-							</div>
-					</div>
-					
-					<p class="node-name">哈尔滨本部节点</p>
-				</div>
-				<div class="wrap">
-					<a id="qrCodeA" class="qrcode" href="https://ids.hit.edu.cn/authserver/login?type=qrcode&amp;service=http%3A%2F%2Fjwts.hit.edu.cn%2FloginCAS"></a>
-					<section class="main">
-						<!-- <div class="logo"><img id="logo" alt=""/></div> --><div class="tabHead" style="">
-							<span id="pwdLoginSpan" class="selected_underline"><a id="userNameLogin_a" href="https://ids.hit.edu.cn/authserver/login?type=userNameLogin&amp;service=http%3A%2F%2Fjwts.hit.edu.cn%2FloginCAS" class="loginFont_a">账号登录</a></span>
-							
-							
-							<!-- <span id="outUserLoginSpan">
-								<a th:href="@{/login(type=outUserLogin)}" id="outUserLogin_a" class="loginFont_a"
-									th:utext="#{login.type.out.user.login}">校友登录</a>
-							</span> --></div>
-						<div class="login-pc">
-							<!-- fido登录 -->
-							<!-- 手机动态码登录 -->
-							<!-- 用户名密码登录 --><div id="pwdLoginDiv" style="">
-								<div>
-		<div class="methods"></div>
-		<form class="loginFromClass" method="post" id="pwdFromId" action="https://ids.hit.edu.cn/authserver/login?service=http%3A%2F%2Fjwts.hit.edu.cn%2FloginCAS">
-			<div class="form">
-				<!-- 用户名密码登录 --><div class="m-account">
-					<div class="username item">
-						<span class="prex-icon"><img src="/authserver/cusHitnew/customStatic/web/images/user.png" class="login-icon"></span> 
-						<input id="username" name="username" type="text" class="no-auto-input" readonly="readonly" placeholder="请输入学号/工号" title="请输入学号/工号" value="2023113391" autocomplete="off"></div>
-					<div class="password item">
-						<span class="prex-icon"><img src="/authserver/cusHitnew/customStatic/web/images/pass.png" class="login-icon"></span>
-						<input id="password" name="passwordText" type="password" class="no-auto-input" readonly="readonly" placeholder="请输入密码" title="请输入密码" maxlength="32" autocomplete="off"><input id="saltPassword" name="password" type="hidden"><!-- <a class="input_eye suffix-icon eyehide"></a> --></div>
-					<div class="captcha item hide" id="captchaDiv" style="display: none;">
-						<span class="prex-icon"><img src="/authserver/cusHitnew/customStatic/web/images/yzm.png" class="login-icon"></span> 
-						<input type="text" id="captcha" name="captcha" placeholder="请输入验证码" title="请输入验证码" maxlength="10"><span class="captcha-img">
-							<img id="captchaImg" alt="验证码错误" height="30px"><a class="mask-inner captcha-refresh" onclick="reloadCaptcha(true)" href="javascript:void(0);">刷新</a>
-						</span>
-					</div>
-					<!-- <div class="m-rememberMe">
-						<input type="checkbox" name="rememberMe" id="rememberMe" value="true" style="width:15px;margin-right:5px;"/>
-						<span th:utext="#{login.page.rememberMe.name}" style="font-size: 13px"></span>
-					</div> --></div>
-				<div id="formErrorTip" class="form-errorTip">
-					<span id="showErrorTip" class="form-error text-ellipsis" title="该账号累计并行会话数≥10或IP数≥10，已经被冻结，冻结3分钟后自动恢复正常。">该账号累计并行会话数≥10或IP数≥10，已经被冻结，冻结3分钟后自动恢复正常。</span>
-					<span id="showWarnTip" class="form-warn"></span>
-				</div>
-
-				<div class="cus_rememberMe">
-					<input type="checkbox" name="rememberMe" id="rememberMe" value="true" style="width:15px;margin-right:5px;"><span class="rememberMe_font">7天免登录</span>
-				</div>
-				<div class="btn">
-					<a id="login_submit" href="javascript:void(0);" class="login-btn">登录</a>
-				</div>
-
+		//注销
+		function logout(){
+			if(confirm("您好，确认要注销吗？")){
+				var bs=$("#bs").val();
+				
+				
+				
+				window.parent.frames.location="/logout";//非CAS方式下的注销方式
+				
 				
 
-				<!--<div class="login_tips">
-					注：学生/教职工登录用户名为学号/职工号，初始密码为身份证号后6位，如有字母“X”为大写；如果身份证件不是“中华人民共和国居民身份证”的，初始密码与用户名相同。
-				</div>--></div>
-			<input type="hidden" id="_eventId" name="_eventId" value="submit"><input type="hidden" id="cllt" name="cllt" value="userNameLogin"><input type="hidden" id="dllt" name="dllt" value="generalLogin"><input type="hidden" name="lt" id="lt" value=""><input type="hidden" id="pwdEncryptSalt" value="5WZE3StmBydYZmh0"><input type="hidden" id="execution" name="execution" value="1857aa0a-f67d-4753-b724-20a83be2e58d_ZXlKaGJHY2lPaUpJVXpVeE1pSjkueUZLMHhaTVRuRTlzb2RVVGFPWHU3YVdtaEYwVVZXMmwrdjdtYStGRDNZaUNuRXBaa1Q0YWVOWTgvOUlYUlJJdU0rQzZCQWZWMHVBK3E2dHE2bTVZTE9rekdQVlBxNUIzN2N4N3RZa2RRSkx5ZnBnUnN1SXFpTk4rWWdhVVJjUEFGM2xZejFLOFdtT3J2RXU1SUVIZ1UyR3BBT3dsazR2MUhudVZxeDFmM1UvTEk1dHFHRDR0UHJINkJSWlJTWmxiU3NTRzdhZUNGaHZ0TTJmVk5ZKy9peDd1Smk4VGJDYjBjdjlIUXJrSXVPdVFRT0MvN1FabWl6aDV0VTFUNURXRmJPYzRVMmVORFFFdHA4QkdTd0J0UHNETE00S0s1bWIzMVNpU2ZKaS93azhtWjdiU2NhQmVVOHJyUFNsNzNQTGdIU01oR01QU0lyWnVIdXBLOVZwSkR3L0RyS2svZ0hiby9pd1o4a2QvSW9oWExXM1NYbVZxblY4dVFGS2s3UThsRHJPaE9pU1FUUjB3S0pWbHRnT1ZWVklSV3dOeG44bzNpT0wvSVV6Mk1FZXVIdXZ1UmVSZ3J3bitjcTlBNHdCaFdZVHhseFNndVdsQk8vUXdBUVVmKzlzV1NqYmlVS2NYbGdhT2FDQkFxWjdzOUpFczZ2bkZvdnpxOGlhRlh3SGNuNDlOaU1sOWJOdXZvS2JqK1dhZTF0emNCT05IYjZXTkJ3a2VNdmNlWERlYzZPenB3dldPRUNUSnNmdEd6bFR2U0hXQ05JY0IvR21jc3NWbnEySnRTOEVQelVGcVZmbDNZTHlHNGY2aEVnZFYwbFZreng2eW9aVUxFNUlwdUthcEhEQ1JUWVdnZGRtdUg0Q1h3bTN6TEh2SVNTM1AveUZYRDZsUVRXaUhPeXVVdG44UHFwTXJWV3FqMlY5SEFUcEJYODV0eDJZVEp5Q0xUcFMzWThlZEx0Wis4YTAzaFpQRzl0N0hmOVd3bmhLMXJLZnVXellOTjk3TTlMa201SzU4YjQrU1lGbnBOQlNrTmpiVzUzYWtIZ0RKemowNnNxdnY5dnB5cHl1eVNOVkNHc0dlcE9ha2JiT2s0bG9hbS9tWHU2V0NXYVFYYkRHV2pzZ2hHWXduTFZPS1JwSVNpU0N0S0FOdmVFRU9zYVJXWnU3SCs3eDZFdlZIYmdRL212UDc2ckpEcUx4UUtGNjBvTk8yOXRvNjVHdi83K0tlWG1ORGtRcE5LVXpQK1ErM1hab09hMHhHa3V3ZUNsaEZuQ2JCY2VRSHB6bElEdDFVUDlZNlMrODYveEoxSUVmaGVNUHIxYmNMaXRoRDNLdm5oME1QTjYzY08wZThhbUNKOEpIQzQ3UHQya1U1TXZMNkpLRUdNOFRKcVZScFNIcXYzcG9FVzh4RTJzZU1DY09ZQTVlTmNZYjgxa2ZZY3pzd2xMcHVlSEpVUWpZdktpc3FpVklmWXgxQVR4eDcxUTFHVSs5TytOUTdGSWZqMlBGMmlsN0V1VTlETU1Hc1RSQkVadndPRk9QWVUxRjd1UWIwbXpkRERaRHVBUWd4NWloclB2dlNaKzVnSElzWDZsWUtHM2xjbnVnTHk4TGFiV2JiN3JGa05EV2RpeE5YdDk3bGJIT1R1QnZzZ2w0a29KMmMwWmJ5My9WWHVaSHphakRJS2Z2eGplU3JSbjJYbHhYZ2dSMnJxOWJIZXNzSUxReS9mNnZQaGZ1TmUzcWJ5VnU3V1lyMU5SbnFEUk9xaWFMcW83TDQ4cmJoRW5rOHFEL2xHWTNNTk9COXEvWGs5UW9sRlBsOVA1NnBRM01jdm5zd2N0NW4rQ3p1ekFsNkE3cmJMTkIxWnVRTWIzNXJ4N1dGb1VwMVF6T2NoazBGRURLSS9tNmFwOE80YlI2YmxHaldvTjZGaWx3Zk9JM0cvS3NReWhuYW5aRVBlcE01aEVKMkxSeUZoZzZUajlxSldnQ29YMExGbmdqeXdCQlU3djVIVHdQQUNDTGl4ZGZicXhXWHVhOTUrSmJ1RG5pRjdRK0NXQm5qZmkveHc5ZlhHM1dDTU1jQmZxOWMramZSTGtqRGVkRElucWZ0cXExOGhqNmEwYlNVaHdLdHNDWmxQUGZmTFZzRWU0S2p1Szl6RHJKenQ3UmpkNUhIQ2VFT3pIaU5ORExyV2trSlZZa3EvTFhndlVZdjhPeXFUaFkxcllJUFdodFppLzBOZzNJUmV1clRNaExCZWQ1TWw3bW1lSVZ2U3BvMGZUV1JoRFRYT2FxbnlTUXBDK1lYelhNWW1pWC9ucmMyRjk0ek9kb0ZMai9IUHpDbHJtUHhZVTk2QmJkSzNucklUM00rUFZBY1pwS3B6bGtlNlhZeE15YnFrS2VuN3hZa0hLQXN1QW82RkV2Sm5WN05TRlB4ek1CQ3JZOXJjTzBMVmR6ZHpnUHVnMHQwSi8xOGY2SkpBeUVWQ2ZFVGd6NXIyaTV2R0JGQUpJMUpvMEFDWHZiT281V00yUVpiM2FOdHVESVI5SzVBUUpZR00yWE1GeEtOQXF3eDRyWE14ZFJRanM1aVBtNGlmTS9XUGt3QlNmNzVJaHBNdythVkUzbUNGZG45NEJ0QzZxYlBYdTJ1ZldGRUZwclYramltanU0SE54K05SdEd5MitGZUUwTGVzZS85T0c4WGFKdThWcHRsMkd5VXA5WGNYN2g0K1g0N2plZTlvMTE5Q1VWUGM0TTRJbkZtWi92MWtsUjU0WUZYZ1ZNS0xhN29PU1NqbmxkbDQ4ZUNQcUVxUG94aWFKb2ZHTkhiVTF2ZFVGNmlCZ2lzUnVOOFFScmtTUVFWaGJocGp1ZHRaVkd6SjZWa25BZFNqQ1VVTFkxVHFNOWpZcXNVVmQwQVp5VFJaY2JhY2Y5THM2T1BCZGtqRHdKZEpWUC9PTkF0TG1pWUdJVFJ5OWxlRzhsQXhyV2k5TlM0eEVWUjZnZk4velQ5MnZnVkNqNFdkZHVyelhYVlBrNFNJRUJiZkdqVFAydHk0WnBUMGJEMzZXcDE1Z1hkcEV1TktsamJ5K0hkckNFN01adHV1QlZaZkl6bmp6b2J6bXNsTWpMcHZxeW10Ym4wM3hMVGN1N1VCeHpQMGwvd0kwa1MyRzBVY2QrTVAvc2RqTnR4K2hDS3dIYXFzbkRRaFpyY2lDMzVFMVBpd2lWWmtDOGtsU09tVHBTMkZWUGlTeTF3K3pPWmx3QXFUNXU0MTJrTkwybVE4ZUQ4OVFBSzRHMlhBSXlvdDlYLzhPOVg0SDFTa3Rua2xRZ3hvaUdRZkkzMzBYYXhLeTFpSzNTUGE2eVhVWFFveTFSUkVVSW03TUNhc05vM05CalcxYTRTMXhpZGJLaFRNaFYyQUxBdlkzSlI5UEhPM1QwZjVOWmFXNXZWaHNXeXlZYW56RUU1Y2NOVVNiTHJIa1VJazdjNW9jb3hQbDhHTmUwWUZWVm5Yd3B1eWhTYThvWmhoTDJhZXJhc0FCRTdjaWgrcmNVM3Zmek1WUHY2MWd2WnJlUWJPMWJQYXpyQmdLNXl2aW5zSE5zU0xWUXY0c3B1c25Ca0tENDhKLzQ1RUE5QnYzL1pESkNXTzAxVTFlQlRadzFYeXFJZ2RxVmxEWHpNYTdnWmlDYzl0UU5VUVVNdjdiT3dibDA3bzlZRlZNVW5mMGZlSlc0dmlKWllGeXA4LzBpaExqc2M5SG5vekc3ek9wdzR3N2ZuRVpjWlRxaklUNzNnWnFZbkpFMGRwaUdYYktNMWRtNmlBWnBrTmpVSGhKRll0Sm5lbml5UWsxV3R5a3NGcTBpVWovZnlJL3cwYm1WT3dhSnFDaUhKbUFXVkE5QUVhdHpCK2p6NkxCZ1BOeUl3TzRYUmlBbTVCbG02SmlKZ1B5NW1VZGpkUW55cmNSQk1wSEVIekxKQ1J3T2lybEtIaGNXL0x4SVVOM2dxSjhPSjRVME1kdjRhRlpQdUFGdFAwTXlzcmluRDRSbU1IMDZMSDlkb0pMOEh1MTdIYjI3TnJ6MWNMaDFLYjFDMTBIL3BZNmhQMytSbHYyRmlObzVEMWdLNlVSL2wyMS9nQ3A3K09acEpaZ1Y0RmQrV0Z1M2FxTlpRaUl5NGJtT1FiRXJCZkJpbTcvSE1lQXo0ZCtrb3dVYXJ6SUczTnlycTM4NlFXN1RPSkl5OUJleUhPUzZLVWl2L1cwUGl0bzB2a21qYTI3NjQxSW02ZWtGUXVjSXgyOU9pMVZkU0JSWUljbnp0a2dNa3R6VmhjNEE0L0lpS1NqUm5DNmZpUnJyNjhDcHUyb2FhSnB5U1F5RzNmVm1zWElQRUY4RmMwS2tybVlFOFRtaEM4Ylo4VlVKY3hLRkkrY3YvbDBqU2o2VmJITEI3Y0NJV0pZSHorY0NBeXVLbVlDd29yK1oxbFpaZXNOWmNFMjY3YUNOSDE0ZDBrY2pidjR5RXBDV3NUZXZQVE1HQksrT1pyOXl4b21jY3ZqMlZydmtNVVZBbWwvemtrcS9LSUNlTU50aE05d3FEMXI1ckNSTysxYUNmMDZPNTNJRlNZdTYvZU1wOVBQVHJsbGZlTElYTXpvQmVpWE1YTlJJWDk3RC9ETTZEbEdjbEVlZlVsTVpKT3hDenlSeWE4RytSUVhyOXNhRm56VmVCV0FYRHZ3RTVpWmpTQUlHNnJPZ1JWczc4ZU9vaFQ4dnVYTjZMWXVEVWJsRTZyaGxZbDhScU9LeFR1RzZCZ25GZUNNbWZ2NUE4bkFneWx3a04xNkpTRng2bFJOK3pjUk5WOFN4MEZKeUhudThKN1NFWnQ1OG5CeExOMTZYb3BpaFpHV3d3K3ZBL0h0UGg2N3VaMGNycGNMOG1iUzdiWmsrcnh6NStiL3psUzdjSUwrSU9Obm9DTjRTNHh1S1VYcUF2YXI1T1R4ekpUMFRrc1JxRlE4a3NQbFBOYlFCSjFLV1V2Q1VDV09ERHdwUTdWL0xlWUZsaGJoU09IdTFHUC9BUXZVYi85TVU5bnNXQ20rSDVoSUx5eXpyK3R5S2lzb0FxSGZCUW9FemYxWTNJaUZiWTdOWWdYVThjOGxjeUxSeHVrRlNpU1NFQUJpeTYrMFVDMk8yaU1ERStyZUt1U3g0U0s2cER4ZnBYVUtXWDZET05hMlV5a3ExaHFWYjZ1eXg1QXBSVU5qVnR2ZG9CSTZXVG4raVV2Q3l4b2VQL2pyczlyNVF4eS9KMjdBcHkvMVNFWVBSQmVVZVNkZWltRGd2Sk5NWXhLbDNwSVIvWTFEN0ZOenJxRXdheW1hZVpUdHhWL3pCV3hLbi8wUjZYZDdlTjRjR3pkYlpIRS9HME5CaHFMZnJkK3RIRFNTQzVWaXdmc2ZqZjg5T2JxZk1qWWU4M2MwSGgwYWdoNHlUSGNLd1NjcS9uS1Q1UkpkdTJvUU5RRlczcXMxYTBsM1VTNEdMdkJ6ak1RMk1LSDVMQkZNNFY1MlhQSVBMdC9CRjk3eUoxeWhwQ0JCMG9qTTJSNmNoY3QyN1NsaVhtVVNRako0RzhIL2NKTlFXMEMxdVkxQTdtakg3ckZlQVhlVWNBbURCMW5vVXNCbGVZNElwejErR3NFVUpLd3BiNG5yK0ZRU2ZBbnZLa09yV2ZzVHdyQTlITWRXbnRKVEVwTkl0MHNaMitIUHFvR2pORVh0UVNiamZLRGs0STdIcG1UWEc4Z0NrZjh0N1E1bytJR0I2UjVtd01TSDc3SUJQSXY5TGVEUG9GblpEMUxVdGd4YnJCREc1V0FnMXJsdWc9LkpyNmdudHpzUGQ3cUtBVzVfQzBtVVNyNDl3MjhSckVLVTJIN1daZVRlczVTalFMbWp5cUZXbFJvZ2xWWmdPbzdBQXdRc2NrWXBmclU2NXZIOGJwOV93"></form>
-	</div>
-							</div>
+			}
+		}
+		//修改密码
+		function updMm(){
+			
+			
 
-							<!-- 帐号激活|忘记密码 --><div class="cus_rem">
-								<div>
-									<a id="activationAccountId" href="https://ids.hit.edu.cn/retrieve-password/accountActivation/index.html?service=http%3A%2F%2Fjwts.hit.edu.cn%2FloginCAS" class="activation_account activationAccountId">账号激活</a>
-								</div>
-								<div>
-									<span>
-										<a href="https://ca.hit.edu.cn/info/1146/1135.htm" target="_blank" class="cus_help">遇到问题</a>
-										<span style="color: rgba(34,34,34,0.7);">&nbsp;|&nbsp;</span>
-									</span>
-									<a id="retrievePassId" href="https://ids.hit.edu.cn/retrieve-password/retrievePassword/index.html?service=http%3A%2F%2Fjwts.hit.edu.cn%2FloginCAS" class="activation_account retrievePassId">忘记密码？</a>
-								</div>
-							</div>
+			var mm2 = $("#mm2").val();
+			var mm3 = $("#mm").val();
+			if( null == mm2 || "" == mm2 || null == mm3 || "" == mm3){
+				alert("*号为必填项！");
+				return;
+			}
+			if(mm3!= mm2){
+				alert("新密码两次输入不一致！");
+				return;
+			}
+
+			 var patrn = new RegExp( "^(?![0-9A-Za-z]+$)(?![0-9A-Z\\W]+$)(?![0-9a-z\\W]+$)(?![A-Za-z\\W]+$)[0-9A-Za-z~!@#$%^&*()_+`\\-={}|\\[\\]\\\\:\";'<>?,./]{8,}$") ;
+
+
+            if (!patrn.test(mm3)) {
+                alert("请正确修改密码，应为8-18位的大小写字母、数字、特殊字符组合！");
+                return;
+            }
+			document.divFrom.action = "/updMm";
+			document.divFrom.submit();
+
+			
+
+
+		}
+
+		function jxxxUpdate(){
+			var src = "/xxgl/querySzxxView";
+			jQuery("#iframename").attr("src",src);
+		}
+		function xsxxUpdate(){
+			var src = "/xswhxx/queryXswhxx";
+			jQuery("#iframename").attr("src",src);
+		}
+
+		function passqx(){
+			$('#mm1').val('');
+			$('#mm').val('');
+			$('#mm2').val('');
+			BOX_remove('updMm');
+			//location.href="/main";
+		}
+		function updryjszylj(dlzylj){
+			var url="/updRyjsZylj";
+			var param={'dlzylj':dlzylj};
+			$.post(url,param,function(result){
+				if(result == '1'){
+					location.href="/main";
+				}else{
+					alert("切换失败！");
+					return;
+				}
+			})
+		}
+		function oAction(qxdm,qxmc,url){
+			url=url.replace('/sygl1.0','');
+
+			var u ='';
+
+			if(url.indexOf('sygl1.0')>=0){
+				u='http://sjjx.hit.edu.cn'+url+'&id=2023113391&mid=e2b2ef06289b347244beafc448ade767';
+			}else{
+				u=url+'?a=1&id=2023113391&mid=e2b2ef06289b347244beafc448ade767';
+			}
+
+
+			document.tzform.action = u;
+			document.tzform.submit();
+		}
+	</script>
+</head>
+<body style="height:100%;overflow-y:hidden; zoom:1;min-width:1260px;_width:1260px; width:auto">
+<form name="tzform" id="tzform" method="post" target="_blank">
+
+</form>
+
+<form name="queryform" id="queryform" method="post">
+	<input type="hidden" name="usercode" value="2023113391">
+	<input type="hidden" name="password" value="GCRY7)985]xjwH26">
+	<input type="hidden" id="dljs" value="3">
+	<input type="hidden" name="jsdm" id="jsdm" value="">
+	<input type="hidden" name="bs" id="bs" value="1">
+	<input type="hidden" name="zxlj_dm" id="zxlj_dm" value="1">
+</form>
+<!--头部加导航-->
+
+<div class="container-fluid" id="north">
+	<div class="top">
+		<div class="logo Floatleft">哈尔滨工业大学本科教学管理与服务平台</div>
+		<div class="top-right">
+			<div id="taskbar_right">
+				<div id="site-nav">
+					<div class="switch">
+						<div class="photo"> <a id="role" class="pngFix" title="角色" href="#"><i class="fa fa-user"></i></a> </div>
+						<div class="switch-bd">
+							<div class="switch_arrow pngFix"></div>
+							<div class="clr"></div>
+							<ul>
+								
+									<li onclick="javascript:qhjsLogin('3');">
+										<p class="Floatleft">学生</p>
+										<span></span>
+									</li>
+								
+							</ul>
 						</div>
-						<!-- 嵌入二维码登录 --><!-- <div class="login-qrcode">
-							<div th:replace="${@systemConfigUtils.getConfigTheme()+'/qrLoginPage'} :: qrLoginPage"></div>
-						</div> --></section>
-
 					</div>
+				</div>
+
+
+				<a id="person_info" title="主页" class="pngFix" href="javascript:void(0);" onclick="javascript:getReturn();return false;"><i class="fa fa-home"></i></a>
+				
+					<a id="person" title="跳转到网络课程服务平台" class="pngFix" href="http://ids.hit.edu.cn/authserver/login?service=http://jwcs.hit.edu.cn/logincas"><i class="fa fa-th-large"></i></a>
+				
+				
+					<a id="person" title="毕业论文" class="pngFix" href="http://jwts.hit.edu.cn/bylw/cas"><i class="fa fa-file-o"></i></a>
+				
+				<a id="person_info2" title="刷新" class="pngFix" href="javascript:void(0);" onclick="javascript:top.frames['iframename'].location.reload();return false;"><i class="fa fa-refresh"></i></a>
+				<a id="logout" title="退出登录" class="pngFix" href="javascript:void(0);" onclick="javascript:logout();return false;"><i class="fa fa-power-off"></i></a>
 
 			</div>
+			<div class="welcome">您好！翁敬翔同学</div>
 		</div>
 
-		<div class="login_bottom">
-			<!-- <div class="login_navs">
-				<img id="goleft" alt="logo" th:src="@{${#themes.code('custom.static.path')}+'/web/images/leftnav.png'}">
-				<img id="goright" alt="logo"
-					th:src="@{${#themes.code('custom.static.path')}+'/web/images/rightnav.png'}">
-			</div> --><div class="bottom_fonts">Copyright 2025 哈尔滨工业大学 技术支持：网络安全和信息化办公室</div>
-		</div>
-
-		<div class="language_switch t_switch">
-			<div class="auth-language">
-				<button class="eng_btn">Eng</button>
-				<button class="cn_btn active">中文</button>
-			</div>
-			</div>
 	</div>
-	<!-- 滑块验证码 --><div id="sliderCaptchaDiv" style="width: 100%;height: 97%"></div>
+	<div id="taskbar_center" style="width: 1200px;">
+		<div class="navi_body">
+			<div class="navi_head">
+				<div id="tabs_left_scroll" style="display: block;"><i class="fa fa-backward"></i></div>
+				<div id="tabs_container" style="width: 1120px;">
+					<div class="navi_con">
+						
+					<span>
+					      <p class="navi_title"><i class="fa"></i>培养方案</p>
+					      
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/pyfa/queryPykc" id="closeBtn2" target="iframename" class="button button--aylen">培养方案查询</a></p>
+											  
 
-<script src="/authserver/cusHitnew/static/custom/js/login-language-custom.js?v=20251117.152500" type="text/javascript"></script>
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/zxjh/queryZxkc" id="closeBtn2" target="iframename" class="button button--aylen">执行教学计划查询</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxx/devDoc" id="closeBtn2" target="iframename" class="button button--aylen">2016培养方案</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+					</span>
+						
+					<span>
+					      <p class="navi_title"><i class="fa"></i>个人中心</p>
+					      
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xswhxx/queryXswhxx" id="closeBtn2" target="iframename" class="button button--aylen">个人信息</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/pub/queryMmxg" id="closeBtn2" target="iframename" class="button button--aylen">修改密码</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/toUpdatePassword" id="closeBtn2" target="iframename" class="button button--aylen">修改统一身份认证密码</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+					</span>
+						
+					<span>
+					      <p class="navi_title"><i class="fa"></i>公共信息</p>
+					      
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/yhxz" id="closeBtn2" target="iframename" class="button button--aylen">使用须知</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xtfk/addFkxx" id="closeBtn2" target="iframename" class="button button--aylen">系统反馈</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xlcx/queryXlcx" id="closeBtn2" target="iframename" class="button button--aylen">校历查询</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/kjscx/queryKjs" id="closeBtn2" target="iframename" class="button button--aylen">空教室查询</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/pubtzgg/queryXtxxList" id="closeBtn2" target="iframename" class="button button--aylen">系统消息</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+					</span>
+						
+					<span>
+					      <p class="navi_title"><i class="fa"></i>学生事务</p>
+					      
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/dyzzysq/queryZzylb" id="closeBtn2" target="iframename" class="button button--aylen">大一转专业申请</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/dyzzysq/queryDdlsq" id="closeBtn2" target="iframename" class="button button--aylen">专业集群分流申请</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/zyfxxk/queryKzyfz" id="closeBtn2" target="iframename" class="button button--aylen">跨专业发展课程体系申请</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/zxsq/querywzyxsmdb" id="closeBtn2" target="iframename" class="button button--aylen">微专业申请</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/fhsq/querycflbzh" id="closeBtn2" target="iframename" class="button button--aylen">学分转换申请</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/dyzzysq/queryZylnxzysq" id="closeBtn2" target="iframename" class="button button--aylen">专业类内选专业</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/hksq/queryHkbl" id="closeBtn2" target="iframename" class="button button--aylen">学生查询缓考进度</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/hksq/queryCjfhbllc" id="closeBtn2" target="iframename" class="button button--aylen">学生查询复核进度</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/fxexw/queryFxexwList" id="closeBtn2" target="iframename" class="button button--aylen">辅修及微专业缴费</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xswhxx/queryJhrxx" id="closeBtn2" target="iframename" class="button button--aylen">父母信息录入</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsTkTfList" id="closeBtn2" target="iframename" class="button button--aylen">辅修退课退费申请</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+					</span>
+						
+					<span>
+					      <p class="navi_title"><i class="fa"></i>学生选课</p>
+					      
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=bx" id="closeBtn2" target="iframename" class="button button--aylen">必修</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=xx" id="closeBtn2" target="iframename" class="button button--aylen">专业限选及专业选修</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=yy" id="closeBtn2" target="iframename" class="button button--aylen">英语</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=ty" id="closeBtn2" target="iframename" class="button button--aylen">体育</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=qxrx" id="closeBtn2" target="iframename" class="button button--aylen">全校任选</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=szhx" id="closeBtn2" target="iframename" class="button button--aylen">文化素质核心</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=szxx" id="closeBtn2" target="iframename" class="button button--aylen">文化素质选修</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=cxyx" id="closeBtn2" target="iframename" class="button button--aylen">创新研修</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=cxsy" id="closeBtn2" target="iframename" class="button button--aylen">创新实验</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=cxcy" id="closeBtn2" target="iframename" class="button button--aylen">创新创业</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=xsyt" id="closeBtn2" target="iframename" class="button button--aylen">新生研讨</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=mooc" id="closeBtn2" target="iframename" class="button button--aylen">MOOC</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=szjz" id="closeBtn2" target="iframename" class="button button--aylen">素质讲座</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=xsxk" id="closeBtn2" target="iframename" class="button button--aylen">外专业课程</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/loginXyjsk" id="closeBtn2" target="iframename" class="button button--aylen">研究生课程</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=kzy" id="closeBtn2" target="iframename" class="button button--aylen">辅修课程</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/kbcx/queryGrkb" id="closeBtn2" target="iframename" class="button button--aylen">个人课表查询</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/kbcx/queryXskb" id="closeBtn2" target="iframename" class="button button--aylen">班级推荐课表查询</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsTkList" id="closeBtn2" target="iframename" class="button button--aylen">试听期退课申请</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=kzyfzxk_xj" id="closeBtn2" target="iframename" class="button button--aylen">跨专业发展-校级体系</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=kzyfzxk_fx" id="closeBtn2" target="iframename" class="button button--aylen">跨专业发展-辅修体系和院级体系</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xsxk/queryXsxk?pageXklb=wzy" id="closeBtn2" target="iframename" class="button button--aylen">微专业选课</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+					</span>
+						
+					<span>
+					      <p class="navi_title"><i class="fa"></i>考试管理</p>
+					      
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/kscx/queryKcForXs" id="closeBtn2" target="iframename" class="button button--aylen">考试详细查询</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+					</span>
+						
+					<span>
+					      <p class="navi_title"><i class="fa"></i>成绩管理</p>
+					      
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/cjcx/queryCjpub" id="closeBtn2" target="iframename" class="button button--aylen">个人成绩</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/sljcjcx/sljcjcxInit" id="closeBtn2" target="iframename" class="button button--aylen">四六级成绩</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xqyjls/xqyjls" id="closeBtn2" target="iframename" class="button button--aylen">学情预警</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/jdcx/queryXsjdcx" id="closeBtn2" target="iframename" class="button button--aylen">学习进度</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xfj/queryXfj" id="closeBtn2" target="iframename" class="button button--aylen">学分绩查询</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/yysq/queryYysqList" id="closeBtn2" target="iframename" class="button button--aylen">大学英语免修/免听申请</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/hksq/topageSqlj" id="closeBtn2" target="iframename" class="button button--aylen">成绩类申请</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+					</span>
+						
+					<span>
+					      <p class="navi_title"><i class="fa"></i>教学评价</p>
+					      
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/jxpj/queryJxssgtList" id="closeBtn2" target="iframename" class="button button--aylen">课程教学实时沟通</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/jxpj/queryJxglyjfkList" id="closeBtn2" target="iframename" class="button button--aylen">教学管理意见反馈</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xspjgd/queryPjzn" id="closeBtn2" target="iframename" class="button button--aylen">学生评教</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/wjdc/queryWjdcsm" id="closeBtn2" target="iframename" class="button button--aylen">毕业生问卷调查</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/pjjg/queryAllPjjg" id="closeBtn2" target="iframename" class="button button--aylen">评价反馈结果</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/gcpj/queryGcpjList" id="closeBtn2" target="iframename" class="button button--aylen">过程评教</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+					</span>
+						
+					<span>
+					      <p class="navi_title"><i class="fa"></i>交流交换</p>
+					      
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/jljh/queryJljhxmList" id="closeBtn2" target="iframename" class="button button--aylen">交流交换项目</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xxjh/queryXxjh" id="closeBtn2" target="iframename" class="button button--aylen">交流/交换学习计划表制定</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xxjh/shtgXxjh" id="closeBtn2" target="iframename" class="button button--aylen">交流学习知悉书制定</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/jsp/student/xxjh/queryRdlc.jsp" id="closeBtn2" target="iframename" class="button button--aylen">交流/交换返校流程</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/fxrd/queryRdjh" id="closeBtn2" target="iframename" class="button button--aylen">交流/交换课程认定表制定</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+					</span>
+						
+					<span>
+					      <p class="navi_title"><i class="fa"></i>实验系统</p>
+					      
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/loginsysj/loginSygl" id="closeBtn2" target="iframename" class="button button--aylen">实验管理系统</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+					</span>
+						
+					<span>
+					      <p class="navi_title"><i class="fa"></i>创新创业</p>
+					      
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/cxcycx/queryXmList/1" id="closeBtn2" target="iframename" class="button button--aylen">参与项目查询</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/tzggcxcy/queryTzgg/2" id="closeBtn2" target="iframename" class="button button--aylen">大一年度申请</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/cxcyXmsbjcgl/queryXmXsyq/2" id="closeBtn2" target="iframename" class="button button--aylen">大一年度接收邀请</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xmydsq/queryXmList/2" id="closeBtn2" target="iframename" class="button button--aylen">大一年度异动申请</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/tzggcxcy/queryTzgg/1" id="closeBtn2" target="iframename" class="button button--aylen">大创项目申报及报告上传</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/cxcyXmsbjcgl/queryXmXsyq/1" id="closeBtn2" target="iframename" class="button button--aylen">大创项目接收邀请</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/xmydsq/queryXmList/1" id="closeBtn2" target="iframename" class="button button--aylen">大创项目异动申请</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/jscx/queryAllJingsxm_xs" id="closeBtn2" target="iframename" class="button button--aylen">竞赛计划查询</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/kpbm/queryCxjh" id="closeBtn2" target="iframename" class="button button--aylen">竞赛报名</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/kpjh/queryCxjh" id="closeBtn2" target="iframename" class="button button--aylen">创新创业培育-学生项目申报</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/kpjh/queryCxAllXm_jsyq" id="closeBtn2" target="iframename" class="button button--aylen">创新创业培育-成员接受邀请</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+								  
+									  
+									  
+										  
+											  
+											  
+											  
+												  <p><a title="" href="/cxxf/queryCxxf" id="closeBtn2" target="iframename" class="button button--aylen">创新学分</a></p>
+											  
+
+										  
+
+
+
+									  
+								  
+
+							  
+						  
+							  
+						  
+							  
+						  
+					</span>
+						
+					</div>
+				</div>
+				<div id="tabs_right_scroll" style="display: block;"><i class="fa fa-forward"></i></div>
+			</div>
+		</div>
+	</div>
+
+	<!--	颜色选择-->
+	<div class="zt">
+		<div class="Floatleft mr10"><i class="fa fa-paint-brush"></i>主题风格</div>
+		<a class="color color04" title="原风格" onclick="updryjszylj('commons/main/main')" href="#"></a>
+		<div class="Floatleft line"></div>
+		<a class="color color01" title="绿色" onclick="updryjszylj('commons/main/main_green')" href="#"></a>
+		<a class="color color02" title="蓝色" onclick="updryjszylj('commons/main/main_blue')" href="#"></a>
+		<a class="color color03" title="棕色" onclick="updryjszylj('commons/main/main_brown')" href="#"></a>
+		<a class="color color05" title="黄色" onclick="updryjszylj('commons/main/main_yellow')" href="#"></a>
+	</div>
+	<!--topEnd-->
+	<!--表格-->
+
+</div>
+
+
+
+<!--头部加导航-->
+
+<div id="tabs_portal_0_panel" style="height: 573px;">
+	<div class="main05">
+		<iframe id="iframename" name="iframename" src="/pubtzgg/queryTzggByMxxs" border="0" framespacing="0" marginheight="0" marginwidth="0" style="width: 100%; height: 100%;" frameborder="0" allowtransparency="true"></iframe>
+		<div class="clr"></div>
+	</div>
+	<div class="clr"></div>
+</div>
+
+
+<!-- 修改密码 -->
+<div id="updMm" style="display:none; width: 570px;border: 1px solid #2c4f72;-webkit-box-shadow: 0px 0px 5px #000;-moz-box-shadow: 0px 0px 5px #000;box-shadow: 0px 0px 5px #000; ">
+	<form name="divFrom" id="divFrom" method="post">
+	<input type="hidden" name="token" value="0.6754486577730938">
+		<div class="Floatleft Pct100 popup_bg">
+			<div class="popup_left">修改本科教学管理服务系统中的密码</div>
+			
+				<a href="#" class="btn_close" onclick="javascript:BOX_remove('updMm');"> </a>
+			
+		</div>
+		<div class="clr"></div>
+		<div class="popup">
+			<table id="divtab" width="100%" cellpadding="0" cellspacing="0" class="addlist" style="border-collapse:collapse">
+				
+				<tbody><tr>
+					<th>新密码：</th>
+					<td align="left"><input type="password" name="mm" id="mm" maxlength="18"><span class="red ml10">*</span></td>
+				</tr>
+				<tr>
+					<th>再次输入新密码：</th>
+					<td align="left"><input type="password" name="mm2" id="mm2" maxlength="18"><span class="red ml10">*</span></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						
+							<div class="addlist_button1" style="float:right">
+								<a href="javascript:void(0);" onclick="javascript:passqx();return false;" title="取消"><span>取消</span></a>
+							</div>
+						
+						<div class="addlist_button1 mr15" style="float:right">
+							<a href="javascript:void(0);" onclick="javascript:updMm();return false;" title="保存"><span>保存</span></a>
+						</div>
+					</td>
+				</tr>
+			</tbody></table>
+			<div class="clr"></div>
+			<div style="color: red">
+				
+					
+						<p>注：新密码要求8-18位，不能全是数字或全是字母。此密码为教务系统内部密码，与统一身份认证密码无关，只用于：</p>
+						<p>①无统一身份认证的用户登录系统；</p>
+						<p>②当校园网统一身份认证系统有问题时，将临时启用本密码用于登录本系统；</p>
+						
+						<p>请单独设置此密码（有统一身份认证的用户不要将此密码设置与统一身份认证密码相同）并妥善保管；</p>
+						<p>对于老系统用户，原始密码为原教务系统密码；对于新用户，原始密码为身份证号码后6位。</p>
+						<p>如忘记教务系统内部密码，请联系院系教学秘书或管理员进行重置。    </p>
+					
+					
+				
+			</div>
+			<div class="clr"></div>
+		</div>
+	</form>
+</div>
+
+<div id="syxz" style="display:none; width: 660px;border: 6px solid #dbd7d7;-webkit-box-shadow: 0px 0px 5px #000;-moz-box-shadow: 0px 0px 5px #000;box-shadow: 0px 0px 5px #000; ">
+	<div class="syxz">
+		<div class="syxz_title"></div>
+		<div class="pd10 LH28">
+			<p>
+				翁敬翔同学： <br></p>
+			<p style="text-indent: 2em"> 您好！欢迎使用哈尔滨工业大学本科教学管理服务平台。为保证平台的稳定运行和您的个人利益，请仔细阅读以下服务条款并遵照执行。 </p>
+			<p style="text-indent: 2em"> 1. 用户在使用本平台的过程中，必须遵守国家宪法、教育法律、法规与规章，遵守国家信息安全法律、法规与规章，遵守哈尔滨工业大学校规、校纪。 </p>
+			<p style="text-indent: 2em"> 2. 本平台的用户为实名制。所有用户名与密码相符的操作均视为本人操作。请妥善保管个人的用户名与密码，由于用户名与密码泄露所造成的一切后果由用户个人承担。</p>
+			<p style="text-indent: 2em"> 3. 各项操作请严格按照系统流程进行。因系统随时可能进行改进和修改，如在操作过程中发现与使用说明书不符之处，以系统实际显示结果为准。 </p>
+			<p style="text-indent: 2em"> 4. 严禁在本平台中从事与学习无关的活动。严禁在本平台中发布不健康的以及相关法律、法规与规章禁止发布的言论、文字与图片等。</p>
+			<p style="text-indent: 2em"> 5. 非合法授权情况下，不得针对本平台进行任何扫描、攻击、入侵，以及对系统数据和程序进行下载、解密、泄露、篡改等危害信息安全的行为。 </p>
+			<p style="text-indent: 2em"> 6. 违反以上规定者将由用户承担全部责任。学校在必要时将按校规、校纪予以处理，情节严重者将诉诸法律。 </p>
+			<div class="syxz_bottom">
+				<span class="Floatleft"><input name="" id="checkbox_id" type="checkbox" value="">&nbsp;&nbsp;我同意并接受条款所描述内容</span>
+				<span class="Floatright"><input type="button" id="button_yes" disabled="disabled" value="同意">
+		  <input type="button" id="button_no" value="取消"></span>
+			</div>
+			<div class="clr"></div>
+		</div>
+		<div class="clr"></div>
+	</div>
+</div>
+<div id="tcts" style="display:none;height:400px; width: 670px;border: 6px solid #dbd7d7;-webkit-box-shadow: 0px 0px 5px #000;-moz-box-shadow: 0px 0px 5px #000;box-shadow: 0px 0px 5px #000; ">
+	<div class="syxz">
+		<div class="tbts_title"></div>
+		<div class="pd10 LH28">
+			<p>
+			</p><p style="text-indent: 2em;font-weight: bold;font-size: 20px;color:red;text-decoration: underline;"> 严禁通过软件、脚本语言等技术手段抢课，破坏选课公平性 </p>
+				<p>&nbsp;</p>
+			<p style="text-indent: 2em;font-weight: bold;font-size: 20px;color:red;text-decoration: underline;"> 一经发现将依据《中华人民共和国网络安全法》、《哈尔滨工业大学校园网用户接入管理办法》等文件要求严肃处理 </p>
+		     	<p>&nbsp;</p>
+		     <p style="text-indent: 2em;font-weight: bold;font-size: 20px;color:red;text-decoration: underline;">  包括但不限于取消选课结果、全校通报批评以及列入各类评奖评优负面清单等。</p>
+			<div class="syxz_bottom">
+		  <input type="button" id="button_no" value="我已知晓" onclick="javascript:BOX_remove1('tcts');" style="float: right;">
+			</div>
+			<div class="clr"></div>
+		</div>
+		<div class="clr"></div>
+	</div>
+</div>
+<div id="tsDiv" style="display:none; width: 370px;border: 1px solid #2c4f72;-webkit-box-shadow: 0px 0px 5px #000;-moz-box-shadow: 0px 0px 5px #000;box-shadow: 0px 0px 5px #000; ">
+	<div class="Floatleft Pct100 popup_bg">
+		<div class="popup_left">提示</div>
+		<a href="#" class="btn_close" onclick="javascript:BOX_remove('tsDiv');"> </a>
+	</div>
+	<div class="clr"></div>
+	<div class="popup">
+		<table width="100%" cellpadding="0" cellspacing="0" class="addlist" style="border-collapse:collapse">
+			<tbody><tr>
+				<th width="50%">主讲教师申请待办数量：</th>
+				<td align="left"></td>
+			</tr>
+			<tr>
+				<th width="50%">教师准入申请待办数量：</th>
+				<td align="left"></td>
+			</tr>
+
+			<tr>
+				<td colspan="2" align="center">
+					<div class="addlist_button1" style="float:right">
+						<a href="javascript:void(0);" onclick="javascript:BOX_remove('tsDiv');" title="关闭"><span>关闭</span></a>
+					</div>
+				</td>
+			</tr>
+		</tbody></table>
+		<div class="clr"></div>
+		<div style="color: red">
+			<p>请进入评价管理菜单中进行操作.</p>
+		</div>
+		<div class="clr"></div>
+	</div>
+</div>
+
+
+<div id="setting"> </div>
+
+
 
 </body></html>
