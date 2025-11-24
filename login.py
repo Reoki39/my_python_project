@@ -17,8 +17,19 @@ from dotenv import load_dotenv
 # LOGIN_URL = f"{BASE_URL}/loginCAS"
 
 
-def base_login(close_way="hand"):
-    """简单的登录函数"""
+def base_login(close_way="hand", keep_driver=False):
+    """
+    简单的登录函数
+    
+    Args:
+        close_way (str): "hand" 时在登录后等待用户输入后关闭；若为其他值则自动关闭。
+        keep_driver (bool): True 时登录成功后返回 driver 对象而不关闭浏览器，允许后续操作；
+                          False 时按 close_way 决定是否关闭（默认）。
+    
+    Returns:
+        driver or bool: 若 keep_driver=True 且登录成功，返回 WebDriver 实例；
+                       否则返回 True（成功）或 False（失败）。
+    """
     load_dotenv()
     USERNAME = os.getenv("JW_USERNAME", "")
     PASSWORD = os.getenv("JW_PASSWORD", "")
@@ -92,8 +103,12 @@ def base_login(close_way="hand"):
         # 检查最终结果
         if "jwts.hit.edu.cn" in current_url:
             print("✅ 登录成功！")
+            if keep_driver:
+                print("✓ 浏览器保持打开，返回 driver 实例以供后续操作。")
+                return driver
             if close_way == "hand":
                 input("按回车关闭浏览器...")
+            driver.quit()
             return True
         elif "ids.hit.edu.cn" in current_url and "login" in current_url:
             print("❌ 登录失败：仍在CAS登录页面")
@@ -106,11 +121,13 @@ def base_login(close_way="hand"):
                 f.write(driver.page_source)
             print("  页面源码已保存到 base_login_debug.html")
             input("按回车关闭浏览器...")
+            driver.quit()
             return False
         else:
             print("⚠️  无法确定登录状态")
             print(f"  最终URL: {current_url}")
             input("按回车关闭浏览器...")
+            driver.quit()
             return False
             
     except Exception as e:
@@ -118,9 +135,12 @@ def base_login(close_way="hand"):
         import traceback
         traceback.print_exc()
         input("按回车关闭浏览器...")
+        driver.quit()
         return False
     finally:
-        driver.quit()
+        # 若 keep_driver=True 且已返回 driver，不会执行到这里
+        # 若其他情况，driver 应已在 return 路径中关闭
+        pass
 
 if __name__ == "__main__":
     print("=" * 50)
